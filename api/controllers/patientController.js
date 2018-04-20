@@ -29,7 +29,7 @@ exports.list_all_patients = function(req, res) {
         console.log(err);  
         return; 
       }
-      res.send(result);
+      res.json({patients: result});
     });
   });
 }
