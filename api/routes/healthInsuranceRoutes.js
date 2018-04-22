@@ -5,6 +5,6 @@ module.exports = function(app) {
   // todoList Routes
   app.route('/patients')
     .get(patientController.list_all_patients);
-  app.route('/patients/name?=:name')
+  app.route('/patients/search')
     .get(patientController.read_patient_by_name);
 };

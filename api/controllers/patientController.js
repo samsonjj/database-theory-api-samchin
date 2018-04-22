@@ -40,18 +40,17 @@ exports.read_patient_by_name = function(req, res) {
       console.log(err);  
       return; 
     }
-    nameParts = req.params.name.split("-");
-    firstNameSQL = "";
-    secondNameSQL = "";
-    //if(nameParts.length >= 1) 
-    var sql = "select * from patient" + req.params.rollNumber;
+    firstNameSQL = req.query.firstname ? ' and first_name = \'' + req.query.firstname + '\'': '';
+    lastNameSQL = req.query.lastname ? ' and last_name = \'' + req.query.lastname + '\'' : '';
+    let sql = 'select * from patient WHERE TRUE' + firstNameSQL + lastNameSQL;
+    console.log("sql: ", sql);
     connection.query(sql, [], function(err, result) {
       connection.release(); // always put connection back in pool after last query
       if(err) { 
         console.log(err);  
         return; 
       }
-      res.send(result);
+      res.send({patients: result});
     });
   });
 }
