@@ -54,3 +54,23 @@ exports.read_patient_by_name = function(req, res) {
     });
   });
 }
+
+exports.list_prescriptions_for_patient = function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if(err) {
+      console.log(err);
+      return;
+    }
+    let sql = 'select prescription_id, prescribed_for from patient join prescription on patient.ssn = prescription.prescribed_to'
+              + ' where patient.first_name = ' + '\'' + req.query.firstname + '\''
+              + ' and patient.last_name = ' + '\'' + req.query.lastname + '\'';
+    connection.query(sql, [], function(err, result) {
+      connection.release();
+      if(err) {
+        console.log(err);
+        return;
+      }
+      res.send({prescriptions: result});
+    });
+  });
+}
