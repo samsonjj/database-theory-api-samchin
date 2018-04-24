@@ -50,6 +50,7 @@ exports.read_patient_by_name = function(req, res) {
         console.log(err);  
         return; 
       }
+      console.log(result);
       res.send({patients: result});
     });
   });
@@ -74,3 +75,41 @@ exports.list_prescriptions_for_patient = function(req, res) {
     });
   });
 }
+
+
+exports.list_physicians = function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if(err) {
+      console.log(err);
+      return;
+    }
+    let sql = 'select * from physician';
+    connection.query(sql, [], function(err, result) {
+      connection.release();
+      if(err) {
+        console.log(err);
+        return;
+      }
+      res.send({physicians: result});
+    });
+  });
+}
+
+exports.list_medications = function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if(err) {
+      console.log(err);
+      return;
+    }
+    let sql = 'select * from medication';
+    connection.query(sql, [], function(err, result) {
+      connection.release();
+      if(err) {
+        console.log(err);
+        return;
+      }
+      res.send({medications: result});
+    });
+  });
+}
+

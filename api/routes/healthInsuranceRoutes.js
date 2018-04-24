@@ -9,4 +9,8 @@ module.exports = function(app) {
     .get(patientController.read_patient_by_name);
   app.route('/patients/prescriptions')
   	.get(patientController.list_prescriptions_for_patient);
+  app.route('/physicians')
+  	.get(patientController.list_physicians);
+  app.route('/medications')
+  	.get(patientController.list_medications);
 };
